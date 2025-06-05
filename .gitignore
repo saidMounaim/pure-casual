@@ -1,0 +1,57 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build output
+.next/
+out/
+dist/
+build/
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# Misc
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# Ignore in frontend
+/frontend/node_modules/
+/frontend/.next/
+/frontend/out/
+/frontend/dist/
+/frontend/build/
+/frontend/.env
+/frontend/.env.local
+/frontend/.env.*.local
+/frontend/.DS_Store
+/frontend/logs/
+/frontend/*.log
+
+# Ignore in backend
+/backend/node_modules/
+/backend/.next/
+/backend/out/
+/backend/dist/
+/backend/build/
+/backend/.env
+/backend/.env.local
+/backend/.env.*.local
+/backend/.DS_Store
+/backend/logs/
+/backend/*.log
