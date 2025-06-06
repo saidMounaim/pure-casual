@@ -33,12 +33,12 @@ export const navigationItems = [
 export const authItems = [
   {
     title: "Sign In",
-    url: "/signin",
+    url: "/sign-in",
     icon: User,
   },
   {
     title: "Sign Up",
-    url: "/signup",
+    url: "/sign-up",
     icon: UserPlus,
   },
 ];
