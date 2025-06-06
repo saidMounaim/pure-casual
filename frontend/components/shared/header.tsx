@@ -2,8 +2,11 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { getUser } from "@/lib/actions/auth";
+import UserDropdown from "./user-dropdown";
 
-export function Header() {
+export async function Header() {
+  const user = await getUser();
   return (
     <header className="border-b border-gray-200 bg-white">
       <div className="flex items-center justify-between px-6 py-4">
@@ -17,6 +20,7 @@ export function Header() {
           </Link>
         </div>
         <div className="flex items-center gap-4">
+          {user && <UserDropdown />}
           <Link href="/checkout">
             <Button
               variant="outline"

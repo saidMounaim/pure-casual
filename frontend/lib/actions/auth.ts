@@ -102,3 +102,9 @@ export async function getUser() {
     return null;
   }
 }
+
+// logout
+export async function logoutUser() {
+  const cookieStore = await cookies();
+  cookieStore.delete("token");
+}

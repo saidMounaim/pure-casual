@@ -2,8 +2,13 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import Link from "next/link";
 import SignUpForm from "@/components/shared/forms/sign-up-form";
+import { getUser } from "@/lib/actions/auth";
+import { redirect } from "next/navigation";
 
-const SignUpPage = () => {
+const SignUpPage = async () => {
+  const user = await getUser();
+
+  if (user) redirect("/");
   return (
     <div className="flex items-center justify-center py-16 px-6">
       <Card className="w-full max-w-md animate-fade-in">
