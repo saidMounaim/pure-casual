@@ -4,6 +4,7 @@ import "./globals.css";
 import { Header } from "@/components/shared/header";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/shared/app-sidebar";
+import { Toaster } from "sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,13 @@ export default function RootLayout({
           <div className="min-h-screen flex flex-col w-full">
             <Header />
             {children}
+            <Toaster
+              toastOptions={{
+                className: "text-white font-medium",
+                style: { borderRadius: 8 },
+                unstyled: false,
+              }}
+            />
           </div>
         </SidebarProvider>
       </body>

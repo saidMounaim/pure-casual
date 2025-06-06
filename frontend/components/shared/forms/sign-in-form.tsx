@@ -14,10 +14,15 @@ import { signInSchema } from "@/lib/validators";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { loginUser } from "@/lib/actions/auth";
+import { useRouter } from "next/navigation";
 
 type SignInFormValues = z.infer<typeof signInSchema>;
 
 const SignInForm = () => {
+  const router = useRouter();
+
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -26,8 +31,20 @@ const SignInForm = () => {
     },
   });
 
-  const onSubmit = (data: SignInFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: SignInFormValues) => {
+    try {
+      const { email, password } = data;
+      const response = await loginUser(email, password);
+      if (response.success) {
+        toast.success("Successfully signed in!");
+        router.push("/");
+      } else {
+        toast.error(response.message || "Failed to sign in. Please try again.");
+      }
+    } catch (error) {
+      toast.error("An error occurred while signing in.");
+      console.log(error);
+    }
   };
   return (
     <Form {...form}>
