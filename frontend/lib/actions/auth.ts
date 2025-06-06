@@ -2,6 +2,40 @@
 
 import { cookies } from "next/headers";
 
+// register
+export async function registerUser(
+  email: string,
+  password: string,
+  username: string
+) {
+  try {
+    const response = await fetch(
+      `${process.env.STRAPI_URL}/api/auth/local/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+          username: username,
+        }),
+      }
+    );
+    const data = await response.json();
+    console.log(data);
+    if (!response.ok) {
+      return { success: false, message: "Registration failed" };
+    }
+
+    return { success: true, message: "Registration successful" };
+  } catch (error) {
+    console.error("Registration error:", error);
+    return { success: false, message: "An error occurred" };
+  }
+}
+
 // login
 export async function loginUser(email: string, password: string) {
   try {

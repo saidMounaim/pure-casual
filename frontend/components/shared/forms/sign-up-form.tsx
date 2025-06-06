@@ -14,10 +14,15 @@ import { signUpSchema } from "@/lib/validators";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+import { registerUser } from "@/lib/actions/auth";
+import { useRouter } from "next/navigation";
 
 type SignUpFormValues = z.infer<typeof signUpSchema>;
 
 const SignUpForm = () => {
+  const router = useRouter();
+
   const form = useForm<SignUpFormValues>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -27,8 +32,22 @@ const SignUpForm = () => {
     },
   });
 
-  const onSubmit = (data: SignUpFormValues) => {
-    console.log(data);
+  const onSubmit = async (data: SignUpFormValues) => {
+    try {
+      const { email, password, username } = data;
+
+      const response = await registerUser(email, password, username);
+
+      if (response.success) {
+        toast.success("Registration successful! Please log in.");
+        router.push("/sign-in");
+      } else {
+        toast.error(response.message || "Registration failed");
+      }
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast.error("An error occurred during registration");
+    }
   };
   return (
     <Form {...form}>
