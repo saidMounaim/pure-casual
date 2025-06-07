@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { shippingSchema } from "@/lib/validators";
+import { Button } from "@/components/ui/button";
 
 export type ShippingFormValues = z.infer<typeof shippingSchema>;
 
@@ -27,12 +28,13 @@ export default function ShippingInformationForm() {
       email: "",
       phone: "",
       address: "",
-      city: "",
-      state: "",
-      zip: "",
       notes: "",
     },
   });
+
+  const onSubmit = (data: ShippingFormValues) => {
+    console.log("Shipping form submitted:", data);
+  };
 
   return (
     <Card>
@@ -41,7 +43,7 @@ export default function ShippingInformationForm() {
       </CardHeader>
       <CardContent>
         <Form {...form}>
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
                 control={form.control}
@@ -117,47 +119,6 @@ export default function ShippingInformationForm() {
                 </FormItem>
               )}
             />
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormField
-                control={form.control}
-                name="city"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>City</FormLabel>
-                    <FormControl>
-                      <Input placeholder="New York" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="state"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>State</FormLabel>
-                    <FormControl>
-                      <Input placeholder="NY" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="zip"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>ZIP Code</FormLabel>
-                    <FormControl>
-                      <Input placeholder="10001" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
             <FormField
               control={form.control}
               name="notes"
@@ -175,6 +136,27 @@ export default function ShippingInformationForm() {
                 </FormItem>
               )}
             />
+            <CardTitle>Payment Method</CardTitle>
+            <div className="border border-gray-200 rounded-lg p-4 bg-green-50">
+              <div className="flex items-center gap-3">
+                <div className="w-4 h-4 rounded-full bg-green-500"></div>
+                <div>
+                  <h3 className="font-semibold text-green-800">
+                    Cash on Delivery
+                  </h3>
+                  <p className="text-sm text-green-700">
+                    Pay when your order arrives at your doorstep
+                  </p>
+                </div>
+              </div>
+            </div>
+            <Button type="submit" className="w-full" size="lg">
+              Place Order
+            </Button>
+
+            <p className="text-xs text-gray-600 text-center">
+              By placing this order, you agree to our terms and conditions
+            </p>
           </form>
         </Form>
       </CardContent>

@@ -2,7 +2,6 @@
 
 import ShippingInformationForm from "@/components/shared/forms/shipping-information-form";
 import OrderSummary from "@/components/shared/order-summary";
-import PaymentMethod from "@/components/shared/payment-method";
 import { getProductBySlug } from "@/lib/actions/products";
 import { useCartStore } from "@/store/cart-store";
 import React, { useEffect, useState } from "react";
@@ -14,9 +13,11 @@ const CheckoutPage = () => {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [cartItems, setCartItems] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchDetails() {
+      setLoading(true);
       const items = await Promise.all(
         cart.map(async (item) => {
           const product = await getProductBySlug(item.slug);
@@ -29,6 +30,7 @@ const CheckoutPage = () => {
         })
       );
       setCartItems(items);
+      setLoading(false);
     }
     fetchDetails();
   }, [cart]);
@@ -40,6 +42,28 @@ const CheckoutPage = () => {
   const shipping = cart.length > 0 ? SHIPPING_FLAT_RATE : 0;
   const total = subtotal + shipping;
 
+  if (loading) {
+    return (
+      <div className="py-8 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+          <p className="text-gray-600">Loading your cart...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (cartItems.length === 0) {
+    return (
+      <div className="py-8 px-6">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-3xl font-bold text-gray-900 mb-8">Checkout</h1>
+          <p className="text-gray-600">Your cart is empty.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="py-8 px-6">
       <div className="max-w-6xl mx-auto">
@@ -50,9 +74,6 @@ const CheckoutPage = () => {
           <div className="lg:col-span-2 space-y-6">
             {/* Shipping Information */}
             <ShippingInformationForm />
-
-            {/* Payment Method */}
-            <PaymentMethod />
           </div>
 
           {/* Order Summary */}

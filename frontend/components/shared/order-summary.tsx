@@ -1,8 +1,9 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { useCartStore } from "@/store/cart-store";
 
 type OrderSummaryProps = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,6 +20,8 @@ export default function OrderSummary({
   total,
 }: OrderSummaryProps) {
   const pathImage = process.env.NEXT_PUBLIC_STRAPI_URL;
+  const removeFromCart = useCartStore((state) => state.removeFromCart);
+  const clearCart = useCartStore((state) => state.clearCart);
 
   return (
     <Card className="sticky top-6 h-max">
@@ -51,9 +54,23 @@ export default function OrderSummary({
                   </span>
                 </div>
               </div>
+              <Button
+                variant="destructive"
+                size="icon"
+                onClick={() =>
+                  removeFromCart(item.id || item.productId, item.size)
+                }
+                title="Remove from cart"
+              >
+                &times;
+              </Button>
             </div>
           ))}
         </div>
+
+        <Button variant="outline" className="w-full" onClick={clearCart}>
+          Clear Cart
+        </Button>
 
         <Separator />
 
@@ -73,14 +90,6 @@ export default function OrderSummary({
             <span>${total.toFixed(2)}</span>
           </div>
         </div>
-
-        <Button className="w-full" size="lg">
-          Place Order - ${total.toFixed(2)}
-        </Button>
-
-        <p className="text-xs text-gray-600 text-center">
-          By placing this order, you agree to our terms and conditions
-        </p>
       </CardContent>
     </Card>
   );
