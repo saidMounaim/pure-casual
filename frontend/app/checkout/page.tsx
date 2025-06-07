@@ -73,7 +73,7 @@ const CheckoutPage = () => {
           {/* Checkout Form */}
           <div className="lg:col-span-2 space-y-6">
             {/* Shipping Information */}
-            <ShippingInformationForm />
+            <ShippingInformationForm orderItems={cart} />
           </div>
 
           {/* Order Summary */}

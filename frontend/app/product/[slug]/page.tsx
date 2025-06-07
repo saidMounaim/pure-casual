@@ -84,7 +84,7 @@ export default async function SingleProduct({
             {/* Add to Cart */}
             <ProductAddToCart
               price={product.price}
-              productId={product.id}
+              productId={product.documentId}
               slug={product.slug}
             />
           </div>

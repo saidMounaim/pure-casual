@@ -16,10 +16,25 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { shippingSchema } from "@/lib/validators";
 import { Button } from "@/components/ui/button";
+import { useUser } from "@/hooks/use-user";
+import { toast } from "sonner";
+import { placeOrderWithItems } from "@/lib/actions/orders";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 export type ShippingFormValues = z.infer<typeof shippingSchema>;
 
-export default function ShippingInformationForm() {
+export default function ShippingInformationForm({
+  orderItems,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  orderItems: any[];
+}) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const { user }: any = useUser();
+
+  const router = useRouter();
+
   const form = useForm<ShippingFormValues>({
     resolver: zodResolver(shippingSchema),
     defaultValues: {
@@ -32,8 +47,41 @@ export default function ShippingInformationForm() {
     },
   });
 
-  const onSubmit = (data: ShippingFormValues) => {
-    console.log("Shipping form submitted:", data);
+  const onSubmit = async (data: ShippingFormValues) => {
+    if (!user) {
+      toast.error("You must be logged in to place an order.");
+      return;
+    }
+    try {
+      const { firstName, lastName, email, phone, address, notes } = data;
+      const placeOrder = await placeOrderWithItems({
+        firstName,
+        lastName,
+        email,
+        phone,
+        address,
+        notes,
+        orderItems: orderItems.map((item) => ({
+          size: item.size,
+          quantity: item.quantity,
+          product: item.productId,
+          price: item.price,
+        })),
+      });
+
+      if (placeOrder.success) {
+        toast.success("Order placed successfully!");
+        form.reset();
+        Cookies.set("orderSuccess", "true", { expires: 0.01 });
+        router.push("/thank-you");
+      } else {
+        toast.error("Failed to place order. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting shipping form:", error);
+      toast.error("Something went wrong while submitting the form.");
+      return;
+    }
   };
 
   return (

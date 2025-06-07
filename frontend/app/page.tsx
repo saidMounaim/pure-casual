@@ -1,13 +1,10 @@
 import ProductCard from "@/components/shared/card/product-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { getFeaturedProducts } from "@/lib/actions/products";
-import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
   const featuredProducts = await getFeaturedProducts();
-  console.log(featuredProducts);
 
   return (
     <>
@@ -38,19 +35,22 @@ export default async function Home() {
             Featured Products
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product: any) => {
-              const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}${product.featured.url}`;
-              return (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  title={product.title}
-                  price={product.price}
-                  imageUrl={imageUrl}
-                  slug={product.slug}
-                />
-              );
-            })}
+            {
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              featuredProducts.map((product: any) => {
+                const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}${product.featured.url}`;
+                return (
+                  <ProductCard
+                    key={product.id}
+                    id={product.id}
+                    title={product.title}
+                    price={product.price}
+                    imageUrl={imageUrl}
+                    slug={product.slug}
+                  />
+                );
+              })
+            }
           </div>
         </div>
       </section>
