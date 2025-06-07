@@ -20,8 +20,6 @@ export default async function SingleProduct({
 
   const pathImage = process.env.NEXT_PUBLIC_STRAPI_URL;
 
-  console.log(product);
-
   return (
     <div className="py-8 px-6">
       <div className="max-w-6xl mx-auto">
@@ -84,7 +82,7 @@ export default async function SingleProduct({
             <ProductSizeSelect sizes={product.sizes} />
 
             {/* Add to Cart */}
-            <ProductAddToCart price={product.price} />
+            <ProductAddToCart price={product.price} productId={product.id} />
           </div>
         </div>
       </div>

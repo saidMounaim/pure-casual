@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { getUser } from "@/lib/actions/auth";
 import UserDropdown from "./user-dropdown";
+import CartCount from "./cart-count";
 
 export async function Header() {
   const user = await getUser();
@@ -25,10 +26,11 @@ export async function Header() {
             <Button
               variant="outline"
               size="sm"
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 relative"
             >
               <ShoppingCart size={16} />
               Cart
+              <CartCount />
             </Button>
           </Link>
         </div>
