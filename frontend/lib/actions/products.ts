@@ -21,3 +21,26 @@ export async function getFeaturedProducts() {
     return [];
   }
 }
+
+// single product
+export async function getProductBySlug(slug: string) {
+  try {
+    const res = await fetch(
+      `${process.env.STRAPI_URL}/api/products?filters[slug][$eq]=${slug}&populate=*`,
+      {
+        cache: "no-store",
+      }
+    );
+
+    if (!res.ok) {
+      return { success: false, message: "Failed to fetch product" };
+    }
+
+    const data = await res.json();
+
+    return data.data[0] || null;
+  } catch (err) {
+    console.error("Error fetching product:", err);
+    return null;
+  }
+}

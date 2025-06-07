@@ -1,3 +1,4 @@
+import ProductCard from "@/components/shared/card/product-card";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getFeaturedProducts } from "@/lib/actions/products";
@@ -6,6 +7,7 @@ import Link from "next/link";
 
 export default async function Home() {
   const featuredProducts = await getFeaturedProducts();
+  console.log(featuredProducts);
 
   return (
     <>
@@ -36,34 +38,17 @@ export default async function Home() {
             Featured Products
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {featuredProducts.map((product) => {
+            {featuredProducts.map((product: any) => {
               const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}${product.featured.url}`;
-
               return (
-                <Card
+                <ProductCard
                   key={product.id}
-                  className="group hover:shadow-lg transition-shadow duration-300 animate-fade-in p-0"
-                >
-                  <CardContent className="p-0">
-                    <div className="aspect-square overflow-hidden relative">
-                      <Image
-                        src={imageUrl}
-                        alt={product.title}
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-300"
-                        fill
-                      />
-                    </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-semibold mb-2">
-                        {product.title}
-                      </h3>
-                      <p className="text-gray-600 mb-4">${product.price}</p>
-                      <Link href={`/product/${product.slug}`}>
-                        <Button className="w-full">View Details</Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
+                  id={product.id}
+                  title={product.title}
+                  price={product.price}
+                  imageUrl={imageUrl}
+                  slug={product.slug}
+                />
               );
             })}
           </div>
