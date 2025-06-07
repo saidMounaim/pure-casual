@@ -79,7 +79,10 @@ export default async function SingleProduct({
               <EditorJsRenderer data={product.description} />
             </div>
             {/* Size Selection */}
-            <ProductSizeSelect sizes={product.sizes} />
+            <ProductSizeSelect
+              sizes={product.sizes}
+              productId={product.documentId}
+            />
 
             {/* Add to Cart */}
             <ProductAddToCart

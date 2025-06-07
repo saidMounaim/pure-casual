@@ -42,7 +42,7 @@ const UserDropdown = () => {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
         <DropdownMenuItem asChild>
-          <Link href="/orders" className="flex items-center w-full">
+          <Link href="/my-orders" className="flex items-center w-full">
             My Orders
           </Link>
         </DropdownMenuItem>

@@ -35,6 +35,8 @@ export default function ProductAddToCart({
       <button
         className="w-full bg-black text-white py-2 rounded"
         onClick={handleAdd}
+        disabled={!selectedSize}
+        aria-disabled={!selectedSize}
       >
         Add to Cart
       </button>

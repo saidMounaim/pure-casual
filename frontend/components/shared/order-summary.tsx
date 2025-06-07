@@ -57,9 +57,7 @@ export default function OrderSummary({
               <Button
                 variant="destructive"
                 size="icon"
-                onClick={() =>
-                  removeFromCart(item.id || item.productId, item.size)
-                }
+                onClick={() => removeFromCart(item.documentId, item.size)}
                 title="Remove from cart"
               >
                 &times;

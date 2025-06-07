@@ -1,5 +1,7 @@
 "use server";
 
+import { getUser } from "./auth";
+
 export async function placeOrderWithItems({
   firstName,
   lastName,
@@ -18,6 +20,8 @@ export async function placeOrderWithItems({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   orderItems: any[];
 }) {
+  const user = await getUser();
+  console.log(user);
   try {
     // create order
     const orderRes = await fetch(`${process.env.STRAPI_URL}/api/orders`, {
@@ -34,6 +38,7 @@ export async function placeOrderWithItems({
           phone,
           address,
           notes,
+          user: user?.documentId,
         },
       }),
     });
@@ -72,5 +77,64 @@ export async function placeOrderWithItems({
   } catch (err: any) {
     console.error("Error placing order:", err);
     return { success: false, message: err.message };
+  }
+}
+
+// get my orders
+export async function getMyOrders() {
+  const user = await getUser();
+
+  try {
+    // fetch user orders
+    const resOrders = await fetch(
+      `${process.env.STRAPI_URL}/api/orders?filters[user][id][$eq]=${user.id}&sort=createdAt:desc`,
+      {
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+        },
+      }
+    );
+
+    if (!resOrders.ok) {
+      return { success: false, error: "Failed to fetch orders" };
+    }
+
+    const ordersData = await resOrders.json();
+    const orders = ordersData.data;
+
+    if (orders.length === 0) {
+      return []; // no orders found
+    }
+
+    // Get order IDs to fetch order items
+    const orderIds = orders.map((order) => order.id);
+
+    // fetch orderItems filtered by those order IDs + populate products
+    const resItems = await fetch(
+      `${
+        process.env.STRAPI_URL
+      }/api/order-items?filters[order][id][$in]=${orderIds.join(
+        ","
+      )}&populate=product`,
+      {
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+        },
+      }
+    );
+
+    if (!resItems.ok) {
+      return { success: false, error: "Failed to fetch order items" };
+    }
+
+    const orderItemsData = await resItems.json();
+    const orderItems = orderItemsData.data;
+
+    return orderItems;
+  } catch (err) {
+    console.error("Error fetching orders:", err);
+    return { success: false, error: "Unknown error" };
   }
 }

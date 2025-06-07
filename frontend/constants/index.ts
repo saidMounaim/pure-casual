@@ -20,7 +20,7 @@ export const navigationItems = [
   },
   {
     title: "Orders",
-    url: "/orders",
+    url: "/my-orders",
     icon: ShoppingBag,
   },
   {
