@@ -20,7 +20,7 @@ export default async function ProductsPage() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product) => {
-            const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}${product.featured.url}`;
+            const imageUrl = `${product.featured.url}`;
             return (
               <ProductCard
                 key={product.id}

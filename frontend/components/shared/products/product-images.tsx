@@ -4,20 +4,18 @@ export default function ProductImages({
   featured,
   images,
   title,
-  pathImage,
 }: {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   featured: any;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   images: any[];
   title: string;
-  pathImage: string;
 }) {
   return (
     <div className="space-y-4">
       <div className="aspect-square overflow-hidden rounded-lg relative">
         <Image
-          src={`${pathImage}${featured.url}`}
+          src={featured.url}
           alt={title}
           className="w-full h-full object-cover object-top"
           fill
@@ -32,7 +30,7 @@ export default function ProductImages({
               className="relative aspect-square overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
             >
               <Image
-                src={`${pathImage}${image.url}`}
+                src={image.url}
                 alt={image.url}
                 className="w-full h-full object-cover"
                 fill

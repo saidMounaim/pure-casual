@@ -38,7 +38,7 @@ export default async function Home() {
             {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               featuredProducts.map((product: any) => {
-                const imageUrl = `${process.env.NEXT_PUBLIC_STRAPI_URL}${product.featured.url}`;
+                const imageUrl = `${product.featured.url}`;
                 return (
                   <ProductCard
                     key={product.id}

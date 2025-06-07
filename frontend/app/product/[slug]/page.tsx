@@ -18,8 +18,6 @@ export default async function SingleProduct({
 
   if (!product) notFound();
 
-  const pathImage = process.env.NEXT_PUBLIC_STRAPI_URL;
-
   return (
     <div className="py-8 px-6">
       <div className="max-w-6xl mx-auto">
@@ -44,7 +42,6 @@ export default async function SingleProduct({
             featured={product.featured}
             images={product.images}
             title={product.title}
-            pathImage={pathImage!}
           />
 
           {/* Product Info */}

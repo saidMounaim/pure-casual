@@ -56,7 +56,6 @@ export async function getFeaturedProducts() {
       }
     );
 
-    console.log(res);
     if (!res.ok) {
       return { success: false, message: "Failed to fetch products" };
     }

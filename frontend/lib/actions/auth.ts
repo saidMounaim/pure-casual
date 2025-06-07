@@ -23,8 +23,8 @@ export async function registerUser(
         }),
       }
     );
-    const data = await response.json();
-    console.log(data);
+    await response.json();
+
     if (!response.ok) {
       return { success: false, message: "Registration failed" };
     }
@@ -51,8 +51,6 @@ export async function loginUser(email: string, password: string) {
     });
 
     const data = await response.json();
-
-    console.log(data);
 
     if (!response.ok) {
       return { success: false, message: "Email or password is incorrect" };
