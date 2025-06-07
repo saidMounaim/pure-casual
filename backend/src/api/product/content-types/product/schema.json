@@ -53,6 +53,11 @@
       "relation": "oneToMany",
       "target": "api::size.size",
       "mappedBy": "product"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category"
     }
   }
 }
