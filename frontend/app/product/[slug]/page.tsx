@@ -82,7 +82,11 @@ export default async function SingleProduct({
             <ProductSizeSelect sizes={product.sizes} />
 
             {/* Add to Cart */}
-            <ProductAddToCart price={product.price} productId={product.id} />
+            <ProductAddToCart
+              price={product.price}
+              productId={product.id}
+              slug={product.slug}
+            />
           </div>
         </div>
       </div>

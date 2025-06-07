@@ -6,9 +6,11 @@ import { toast } from "sonner";
 export default function ProductAddToCart({
   price,
   productId,
+  slug,
 }: {
   price: number;
   productId: string;
+  slug: string;
 }) {
   const selectedSize = useCartStore((state) => state.selectedSize);
   const addToCart = useCartStore((state) => state.addToCart);
@@ -23,6 +25,7 @@ export default function ProductAddToCart({
       size: selectedSize,
       price,
       quantity: 1,
+      slug,
     });
     toast.success("Product added to cart!");
   };
