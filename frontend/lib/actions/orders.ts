@@ -96,11 +96,12 @@ export async function getMyOrders() {
       }
     );
 
+    const ordersData = await resOrders.json();
+
     if (!resOrders.ok) {
       return { success: false, error: "Failed to fetch orders" };
     }
 
-    const ordersData = await resOrders.json();
     const orders = ordersData.data;
 
     if (orders.length === 0) {

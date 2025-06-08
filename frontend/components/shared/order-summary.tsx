@@ -19,7 +19,6 @@ export default function OrderSummary({
   shipping,
   total,
 }: OrderSummaryProps) {
-  const pathImage = process.env.NEXT_PUBLIC_STRAPI_URL;
   const removeFromCart = useCartStore((state) => state.removeFromCart);
   const clearCart = useCartStore((state) => state.clearCart);
 
@@ -34,7 +33,7 @@ export default function OrderSummary({
           {cartItems.map((item, index) => (
             <div key={index} className="flex gap-3">
               <Image
-                src={`${pathImage}${item.featured.url}`}
+                src={item.featured.url}
                 alt={item.title}
                 className="w-16 h-16 object-cover rounded-lg"
                 width={64}
