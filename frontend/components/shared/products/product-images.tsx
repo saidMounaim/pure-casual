@@ -19,6 +19,7 @@ export default function ProductImages({
           alt={title}
           className="w-full h-full object-cover object-top"
           fill
+          priority
         />
       </div>
       <div className="grid grid-cols-3 gap-4">
@@ -31,9 +32,10 @@ export default function ProductImages({
             >
               <Image
                 src={image.url}
-                alt={image.url}
+                alt={image.id}
                 className="w-full h-full object-cover"
                 fill
+                priority
               />
             </div>
           ))
