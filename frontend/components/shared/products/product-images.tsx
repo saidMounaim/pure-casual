@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { useState } from "react";
 
 export default function ProductImages({
@@ -26,12 +25,10 @@ export default function ProductImages({
     <div className="space-y-4">
       {/* Main Image Slider */}
       <div className="aspect-square overflow-hidden rounded-lg relative">
-        <Image
+        <img
           src={allImages[current].url}
           alt={title}
           className="w-full h-full object-cover object-top"
-          fill
-          priority
         />
         {/* Slider Controls */}
         {allImages.length > 1 && (

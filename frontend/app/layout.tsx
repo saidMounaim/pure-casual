@@ -37,15 +37,9 @@ export default function RootLayout({
           <div className="min-h-screen flex flex-col w-full">
             <Header />
             {children}
-            <Toaster
-              toastOptions={{
-                className: "text-white font-medium",
-                style: { borderRadius: 8 },
-                unstyled: false,
-              }}
-            />
           </div>
         </SidebarProvider>
+        <Toaster />
       </body>
     </html>
   );
