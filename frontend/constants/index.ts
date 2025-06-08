@@ -5,6 +5,7 @@ import {
   User,
   UserPlus,
   ShoppingCart,
+  Heart,
 } from "lucide-react";
 
 export const navigationItems = [
@@ -27,6 +28,11 @@ export const navigationItems = [
     title: "Checkout",
     url: "/checkout",
     icon: ShoppingCart,
+  },
+  {
+    title: "Wishlist",
+    url: "/wishlist",
+    icon: Heart,
   },
 ];
 

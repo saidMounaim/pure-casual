@@ -2,6 +2,7 @@ import EditorJsRenderer from "@/components/shared/editor-js-renderer";
 import ProductAddToCart from "@/components/shared/products/product-add-to-cart";
 import ProductImages from "@/components/shared/products/product-images";
 import ProductSizeSelect from "@/components/shared/products/product-size-select";
+import ProductWishListButton from "@/components/shared/products/product-wishlist-button";
 import { Badge } from "@/components/ui/badge";
 import { getProductBySlug } from "@/lib/actions/products";
 import Link from "next/link";
@@ -70,6 +71,7 @@ export default async function SingleProduct({
                 <span className="text-sm text-gray-600">
                   {/* ({product.reviews} reviews) */}
                 </span>
+                <ProductWishListButton product={product} />
               </div>
             </div>
             <div>
