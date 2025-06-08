@@ -24,7 +24,7 @@ export default function ProductImages({
       <div className="grid grid-cols-3 gap-4">
         {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          images.slice(1).map((image: any) => (
+          images.map((image: any) => (
             <div
               key={image.id}
               className="relative aspect-square overflow-hidden rounded-lg cursor-pointer hover:opacity-80 transition-opacity"
