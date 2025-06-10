@@ -2,7 +2,6 @@
 
 export async function getProducts(sort?: string) {
   try {
-    // Build sort parameter based on filter
     let sortParam = "";
 
     switch (sort) {
@@ -27,7 +26,7 @@ export async function getProducts(sort?: string) {
         process.env.STRAPI_URL
       }/api/products?populate=*&sort=${encodeURIComponent(sortParam)}`,
       {
-        cache: "no-store",
+        next: { revalidate: 60 },
         headers: {
           Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
         },
@@ -52,7 +51,7 @@ export async function getFeaturedProducts() {
     const res = await fetch(
       `${process.env.STRAPI_URL}/api/products?pagination[limit]=3&populate=*`,
       {
-        cache: "no-store", // always fresh
+        next: { revalidate: 60 },
       }
     );
 
@@ -74,7 +73,7 @@ export async function getProductBySlug(slug: string) {
     const res = await fetch(
       `${process.env.STRAPI_URL}/api/products?filters[slug][$eq]=${slug}&populate=*`,
       {
-        cache: "no-store",
+        next: { revalidate: 60 },
       }
     );
 
